@@ -1,0 +1,54 @@
+<section class="match-details">
+  <h2>Match Details</h2>
+  <div class="match-info-container">
+    <!-- Home Player Info -->
+    <div class="player-info home-player">
+      <img [src]="homePlayer.image" [alt]="homePlayer.name" class="player-img">
+      <h3>{{ homePlayer.name }}</h3>
+      <p>Frames Won: <span>{{ homePlayer.frames }}</span></p>
+      <p>Current Break: <span>{{ homePlayer.currentBreak }}</span></p>
+    </div>
+
+    <!-- Match Status -->
+    <div class="match-status">
+      <h4>Frame {{ frameNumber }}</h4>
+      <div class="current-score">
+        <span class="score">{{ homeScore }}</span>
+        <span class="separator">:</span>
+        <span class="score">{{ awayScore }}</span>
+      </div>
+    </div>
+
+    <!-- Away Player Info -->
+    <div class="player-info away-player">
+      <img [src]="awayPlayer.image" [alt]="awayPlayer.name" class="player-img">
+      <h3>{{ awayPlayer.name }}</h3>
+      <p>Frames Won: <span>{{ awayPlayer.frames }}</span></p>
+      <p>Current Break: <span>{{ awayPlayer.currentBreak }}</span></p>
+    </div>
+  </div>
+
+  <button class="subscribe-button" (click)="subscribe()">Subscribe</button>
+
+  <div class="frames-score">
+    <h3>Frames Score</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Frame</th>
+          <th>Ronnie O'Sullivan</th>
+          <th>Mark Selby</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (frame of frameScores; track frame.frame) {
+          <tr>
+            <td>{{ frame.frame }}</td>
+            <td>{{ frame.player1Score }}</td>
+            <td>{{ frame.player2Score }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
