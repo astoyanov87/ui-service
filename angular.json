@@ -80,12 +80,16 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.json"
+          },
           "configurations": {
             "production": {
               "buildTarget": "snooker-app:build:production"
             },
             "development": {
-              "buildTarget": "snooker-app:build:development"
+              "buildTarget": "snooker-app:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
@@ -116,5 +120,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

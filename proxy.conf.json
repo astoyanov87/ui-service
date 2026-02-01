@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "http://snookerscores.org",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ui-service
+  namespace: snooker-livescore
+  labels:
+    app: ui-service
+    component: data-read
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui-service
+  template:
+    metadata:
+      labels:
+        app: ui-service
+        component: data-ingestion
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8088"
+    spec:
+      containers:
+      - name: ui-service
+        image: astoyanov87/ui-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8880
+          name: health
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
+          requests:
+            cpu: "200m"
+            memory: "512Mi"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: health
+          initialDelaySeconds: 30
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /
+            port: health
+          initialDelaySeconds: 5
+          periodSeconds: 10

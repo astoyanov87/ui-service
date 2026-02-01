@@ -30,24 +30,19 @@
     </h2>
 
     <div class="match-list">
-      @for (match of filteredMatches; track match.id) {
+      @for (match of matches; track match.matchID) {
         <div class="match-item">
-          <img [src]="match.player1Image" [alt]="match.player1" class="player-image">
-          <img [src]="match.player2Image" [alt]="match.player2" class="player-image">
+          <img [src]="match.homePlayer.media.profile" [alt]="match.homePlayer.firstName + ' ' + match.homePlayer.surname" class="player-image">
+          <img [src]="match.awayPlayer.media.profile" [alt]="match.awayPlayer.firstName + ' ' + match.awayPlayer.surname" class="player-image">
           <div class="match-info">
-            <h3>Match ID: {{ match.id }}</h3>
-            <p>{{ match.player1 }} vs. {{ match.player2 }}</p>
+            <h3>{{ match.name }}</h3>
+            <p>Match ID: {{ match.matchID }}</p>
             <p>Status: {{ match.status | titlecase }}</p>
             <p>Round: {{ match.round }}</p>
-            @if (match.score) {
-              <p>Score: {{ match.score }}</p>
-            }
-            @if (match.scheduledTime) {
-              <p>Scheduled Time: {{ match.scheduledTime }}</p>
-            }
-            <a [routerLink]="['/match', match.id]" class="details-link">View Details</a>
+            <p>Score: {{ match.homePlayerScore }} - {{ match.awayPlayerScore }}</p>
+            <a [routerLink]="['/match', match.matchID]" class="details-link">View Details</a>
           </div>
-          <button class="subscribe-button" (click)="subscribe(match.id)">Subscribe</button>
+          <button class="subscribe-button" (click)="subscribe(match.matchID)">Subscribe</button>
         </div>
       } @empty {
         <p class="no-matches">No matches available in this category.</p>
