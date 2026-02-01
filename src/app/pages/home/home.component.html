@@ -32,8 +32,8 @@
     <div class="match-list">
       @for (match of matches; track match.matchID) {
         <div class="match-item">
-          <img [src]="match.homePlayer.media.profile" [alt]="match.homePlayer.firstName + ' ' + match.homePlayer.surname" class="player-image">
-          <img [src]="match.awayPlayer.media.profile" [alt]="match.awayPlayer.firstName + ' ' + match.awayPlayer.surname" class="player-image">
+          <img src="https://images.gc.wstservices.co.uk/fit-in/400x600/{{match.homePlayer.media.profile}}" [alt]="match.homePlayer.firstName + ' ' + match.homePlayer.surname" class="player-image">
+          <img src="https://images.gc.wstservices.co.uk/fit-in/400x600/{{match.awayPlayer.media.profile}}" [alt]="match.awayPlayer.firstName + ' ' + match.awayPlayer.surname" class="player-image">
           <div class="match-info">
             <h3>{{ match.name }}</h3>
             <p>Match ID: {{ match.matchID }}</p>

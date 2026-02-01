@@ -20,7 +20,7 @@ RUN npm run build --prod
 FROM nginx:alpine
 
 # Copy built app from build stage
-COPY --from=build /app/dist/snooker-app /usr/share/nginx/html
+COPY --from=build /app/dist/snooker-app/browser /usr/share/nginx/html
 
 # Copy custom nginx config if needed (optional)
 # COPY nginx.conf /etc/nginx/nginx.conf
