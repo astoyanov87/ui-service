@@ -47,7 +47,11 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.http.get<Match[]>('/api/v1/matches').subscribe({
       next: (matches) => {
-        this.matches = matches;
+        // Normalize status to lowercase for filtering
+        this.matches = matches.map(match => ({
+          ...match,
+          status: match.status.toLowerCase() as 'live' | 'scheduled' | 'completed'
+        }));
         console.log(this.matches);
       },
       error: (error) => {
@@ -55,7 +59,7 @@ export class HomeComponent implements OnInit {
         // Handle error, e.g., show user-friendly message
       }
     });
-  }
+  } 
 
   get filteredMatches(): Match[] {
     return this.matches.filter(m => m.status === this.activeTab);

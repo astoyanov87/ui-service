@@ -30,7 +30,7 @@
     </h2>
 
     <div class="match-list">
-      @for (match of matches; track match.matchID) {
+      @for (match of filteredMatches; track match.matchID) {
         <div class="match-item">
           <img src="https://images.gc.wstservices.co.uk/fit-in/400x600/{{match.homePlayer.media.profile}}" [alt]="match.homePlayer.firstName + ' ' + match.homePlayer.surname" class="player-image">
           <img src="https://images.gc.wstservices.co.uk/fit-in/400x600/{{match.awayPlayer.media.profile}}" [alt]="match.awayPlayer.firstName + ' ' + match.awayPlayer.surname" class="player-image">
