@@ -6,6 +6,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 interface Match {
   matchID: string;
   name: string;
+  tournamentName: string;
   status: 'live' | 'scheduled' | 'completed';
   round: string;
   homePlayerId: string;
@@ -39,7 +40,7 @@ interface Match {
 })
 export class HomeComponent implements OnInit {
   activeTab: 'live' | 'scheduled' | 'completed' = 'live';
-
+  tournamentName: string = '';
   matches: Match[] = [];
 
   constructor(private http: HttpClient) {}
@@ -52,6 +53,8 @@ export class HomeComponent implements OnInit {
           ...match,
           status: match.status.toLowerCase() as 'live' | 'scheduled' | 'completed'
         }));
+        // Set tournament name
+        this.tournamentName = this.matches[0]?.tournamentName || 'Snooker Tournament';
         console.log(this.matches);
       },
       error: (error) => {
