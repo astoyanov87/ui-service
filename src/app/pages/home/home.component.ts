@@ -11,6 +11,7 @@ interface Match {
   round: string;
   homePlayerId: string;
   homePlayerScore: number;
+  startDateTime: string;
   homePlayer: {
     playerID: string;
     firstName: string;
