@@ -43,6 +43,19 @@ export class HomeComponent implements OnInit {
   activeTab: 'live' | 'scheduled' | 'completed' = 'live';
   tournamentName: string = '';
   matches: Match[] = [];
+  
+  get tabTitle(): string {
+    switch (this.activeTab) {
+      case 'live': return 'Live Matches';
+      case 'scheduled': return 'Scheduled Matches';
+      case 'completed': return 'Completed Matches';
+      default: return 'Matches';
+    }
+  }
+
+  trackByMatchID(index: number, item: Match) {
+    return item.matchID;
+  }
 
   constructor(private http: HttpClient) {}
 

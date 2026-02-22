@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 interface MatchScore {
   homePlayerFrames: number;
@@ -18,6 +19,36 @@ interface FrameScore {
   player2Score: number;
 }
 
+interface Match {
+  matchID: string;
+  name: string;
+  tournamentName: string;
+  status: 'live' | 'scheduled' | 'completed';
+  round: string;
+  homePlayerId: string;
+  homePlayerScore: number;
+  startDateTime: string;
+  homePlayer: {
+    playerID: string;
+    firstName: string;
+    surname: string;
+    media: {
+      profile: string;
+    };
+  };
+  awayPlayerId: string;
+  awayPlayerScore: number;
+  awayPlayer: {
+    playerID: string;
+    firstName: string;
+    surname: string;
+    media: {
+      profile: string;
+    };
+  };
+}
+
+
 @Component({
   selector: 'app-match-details',
   standalone: true,
@@ -30,15 +61,15 @@ export class MatchDetailsComponent implements OnInit, OnDestroy {
   private eventSource: EventSource | null = null;
 
   homePlayer = {
-    name: 'Player 1',
-    image: 'https://img.gc.wstservices.co.uk/fit-in/600x600/bbcc5860-9b7e-11ee-b817-916de7e0a6fb.png',
+    name: '',
+    image: '',
     frames: 0,
     currentBreak: 0
   };
 
   awayPlayer = {
-    name: 'Player 2',
-    image: 'https://img.gc.wstservices.co.uk/fit-in/600x600/f3419990-9b47-11ee-a4af-d7e956654f38.png',
+    name: '',
+    image: '',
     frames: 0,
     currentBreak: 0
   };
@@ -47,16 +78,37 @@ export class MatchDetailsComponent implements OnInit, OnDestroy {
   awayScore = 0;
   frameNumber = 1;
 
-  frameScores: FrameScore[] = [
-    { frame: 1, player1Score: 100, player2Score: 67 },
-    { frame: 2, player1Score: 45, player2Score: 89 },
-    { frame: 3, player1Score: 76, player2Score: 12 }
-  ];
+  frameScores: FrameScore[] = [];
 
-  constructor(private route: ActivatedRoute) {}
+  tournamentName: string = '';
+  match: Match | null = null;
+
+  constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.matchId = this.route.snapshot.paramMap.get('id') || '';
+    //fetch from API
+    this.http.get<Match>('/api/v1/match/' + this.matchId ).subscribe({
+      next: (match) => {
+        this.match = match;
+        this.tournamentName = this.match?.tournamentName || 'Snooker Tournament';
+        this.homePlayer.name = this.match.homePlayer.firstName + ' ' + this.match.homePlayer.surname;
+        this.homePlayer.image = this.match.homePlayer.media.profile;
+        this.awayPlayer.name = this.match.awayPlayer.firstName + ' ' + this.match.awayPlayer.surname;
+        this.awayPlayer.image = this.match.awayPlayer.media.profile;
+        this.homeScore = this.match.homePlayerScore;
+        this.awayScore = this.match.awayPlayerScore;
+        // Optionally set frameScores if available from API
+        // this.frameScores = ...
+        console.log(this.match);
+      },
+      error: (error) => {
+        console.error('Error fetching matches:', error);
+        // Handle error, e.g., show user-friendly message
+      }
+    });
+
+    //sse
     this.connectToSSE();
   }
 
