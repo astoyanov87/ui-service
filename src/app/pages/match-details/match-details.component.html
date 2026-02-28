@@ -3,8 +3,8 @@
   <div class="match-info-container">
     <!-- Home Player Info -->
     <div class="player-info home-player">
-      <img [src]="match?.homePlayer.media.profile" [alt]="match?.homePlayer.firstName + ' ' + match?.homePlayer.surname" class="player-img">
-      <h3>{{ match?.homePlayer.firstName }} {{ match?.homePlayer.surname }}</h3>
+      <img [src]="match?.homePlayer?.media?.profile ? ('https://images.gc.wstservices.co.uk/fit-in/600x600/' + match?.homePlayer?.media?.profile) : '/assets/default-player.png'" [alt]="(match?.homePlayer?.firstName || '') + ' ' + (match?.homePlayer?.surname || '')" class="player-img">
+      <h3>{{ match?.homePlayer?.firstName }} {{ match?.homePlayer?.surname }}</h3>
       <p>Frames Won: <span>{{ match?.homePlayerScore }}</span></p>
       <p>Current Break: <span>{{ homePlayer.currentBreak }}</span></p>
     </div>
@@ -21,8 +21,8 @@
 
     <!-- Away Player Info -->
     <div class="player-info away-player">
-      <img [src]="match?.awayPlayer.media.profile" [alt]="match?.awayPlayer.firstName + ' ' + match?.awayPlayer.surname" class="player-img">
-      <h3>{{ match?.awayPlayer.firstName }} {{ match?.awayPlayer.surname }}</h3>
+      <img [src]="match?.awayPlayer?.media?.profile ? ('https://images.gc.wstservices.co.uk/fit-in/600x600/' + match?.awayPlayer?.media?.profile) : '/assets/default-player.png'" [alt]="(match?.awayPlayer?.firstName || '') + ' ' + (match?.awayPlayer?.surname || '')" class="player-img">
+      <h3>{{ match?.awayPlayer?.firstName }} {{ match?.awayPlayer?.surname }}</h3>
       <p>Frames Won: <span>{{ match?.awayPlayerScore }}</span></p>
       <p>Current Break: <span>{{ awayPlayer.currentBreak }}</span></p>
     </div>
@@ -36,18 +36,16 @@
       <thead>
         <tr>
           <th>Frame</th>
-          <th>{{ match?.homePlayer.firstName }} {{ match?.homePlayer.surname }}</th>
-          <th>{{ match?.awayPlayer.firstName }} {{ match?.awayPlayer.surname }}</th>
+          <th>{{ match?.homePlayer?.firstName }} {{ match?.homePlayer?.surname }}</th>
+          <th>{{ match?.awayPlayer?.firstName }} {{ match?.awayPlayer?.surname }}</th>
         </tr>
       </thead>
       <tbody>
-        @for (frame of frameScores; track frame.frame) {
-          <tr>
-            <td>{{ frame.frame }}</td>
-            <td>{{ frame.player1Score }}</td>
-            <td>{{ frame.player2Score }}</td>
-          </tr>
-        }
+        <tr *ngFor="let frame of frameScores; trackBy: trackByFrame">
+          <td>{{ frame.frame }}</td>
+          <td>{{ frame.player1Score }}</td>
+          <td>{{ frame.player2Score }}</td>
+        </tr>
       </tbody>
     </table>
   </div>

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { RouterLink } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 interface MatchScore {
   homePlayerFrames: number;
@@ -104,7 +104,7 @@ export class MatchDetailsComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error('Error fetching matches:', error);
-        // Handle error, e.g., show user-friendly message
+        // Handle error, e.g., show user-friendly message 
       }
     });
 
@@ -144,6 +144,10 @@ export class MatchDetailsComponent implements OnInit, OnDestroy {
     this.awayPlayer.frames = data.awayPlayerFrames;
     this.awayScore = data.awayPlayerPointsInCurrentFrame;
     this.awayPlayer.currentBreak = data.awayPlayerCurrentBreak;
+  }
+
+  trackByFrame(index: number, f: FrameScore) {
+    return f.frame;
   }
 
   subscribe(): void {

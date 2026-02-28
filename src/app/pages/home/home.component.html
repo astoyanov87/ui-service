@@ -37,7 +37,7 @@
             <p>Status: {{ match.status | titlecase }}</p>
             <p>Round: {{ match.round }}</p>
             <p>Score: {{ match.homePlayerScore }} - {{ match.awayPlayerScore }}</p>
-            <a [routerLink]="['/match', match.matchID]" class="details-link">View Details</a>
+            <a [routerLink]="'/match/' + match.matchID" class="details-link">View Details</a>
           </div>
           <button class="subscribe-button" (click)="subscribe(match.matchID)">Subscribe</button>
         </div>
