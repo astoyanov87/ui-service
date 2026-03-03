@@ -19,6 +19,61 @@ interface FrameScore {
   player2Score: number;
 }
 
+interface PlayerStats {
+  index: number;
+  potRate: number;
+  homePlayer: boolean;
+  shotsTaken: number;
+  timeOnTable: number;
+  totalPoints: number;
+  highestBreak: number;
+  averageShotTime: string;
+  fiftyPlusBreaks: number;
+  hundredPlusBreaks: number;
+}
+
+interface Frame {
+  frameNumber: number;
+  homePlayerPoints: number;
+  awayPlayerPoints: number;
+  homePlayerFiftyPlusBreaks: number;
+  awayPlayerFiftyPlusBreaks: number;
+}
+
+interface BallsRemaining {
+  red: number;
+  yellow: number;
+  green: number;
+  brown: number;
+  blue: number;
+  pink: number;
+  black: number;
+  possiblePoints: number;
+}
+
+interface MatchData {
+  index: number;
+  status: string;
+  matchId: string;
+  clockTime: string;
+  homePlayer: boolean;
+  statusMeta: string;
+  currentBreak: number;
+  matchHistory: { frames: Frame[] };
+  ballsRemaining: BallsRemaining;
+  sequenceNumber: number;
+  homePlayerFrames: number;
+  awayPlayerFrames: number;
+  currentFrameStartTime: string;
+  matchPlayerStatistics: { players: PlayerStats[] };
+}
+
+interface History {
+  matchID: string;
+  playerData: unknown;
+  matchData: MatchData | null;
+}
+
 interface Match {
   matchID: string;
   name: string;
@@ -46,6 +101,7 @@ interface Match {
       profile: string;
     };
   };
+  history?: History;
 }
 
 
