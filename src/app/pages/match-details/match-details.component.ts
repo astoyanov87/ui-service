@@ -155,8 +155,13 @@ export class MatchDetailsComponent implements OnInit, OnDestroy {
         this.homeScore = this.match.homePlayerScore;
         this.awayScore = this.match.awayPlayerScore;
         // Optionally set frameScores if available from API
-        // this.frameScores = ...
-        console.log(this.match);
+        this.frameScores = this.match.history?.matchData?.matchHistory.frames.map(f => ({
+          frame: f.frameNumber,
+          player1Score: f.homePlayerPoints,
+          player2Score: f.awayPlayerPoints
+        })) || [];
+        console.log("Frames scores: ")
+        console.log(this.frameScores);
       },
       error: (error) => {
         console.error('Error fetching matches:', error);
